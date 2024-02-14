@@ -36,7 +36,8 @@ class MyHomePage extends StatelessWidget {
         date: DateTime.now()),
   ];
 
-  MyHomePage({super.key});
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,6 @@ class MyHomePage extends StatelessWidget {
           backgroundColor: Colors.red,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
@@ -107,6 +107,44 @@ class MyHomePage extends StatelessWidget {
                       ))
                   .toList(),
             ),
+            Card(
+              elevation: 5,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Título',
+                      ),
+                    ),
+                    TextField(
+                      controller: valueController,
+                      decoration: InputDecoration(
+                        labelText: 'Valor (R\$)',
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(
+                            color: Colors.purple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        child: Text('Nova transação'),
+                        onPressed: () {
+                          print(titleController.text);
+                          print(valueController.text);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ));
   }
