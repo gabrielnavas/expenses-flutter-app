@@ -1,8 +1,6 @@
 import 'package:expenses_flutter_app/models/transaction.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:expenses_flutter_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 void main() => runApp(const Expenses());
 
@@ -56,57 +54,7 @@ class MyHomePage extends StatelessWidget {
                 child: Text('Gráfico'),
               ),
             ),
-            Column(
-              children: _transactions
-                  .map((transaction) => Card(
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 15,
-                              ),
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.purple,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Text(
-                                'R\$${transaction.value.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  transaction.title,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('d MMM y')
-                                      .format(transaction.date),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ))
-                  .toList(),
-            ),
+            TransactionList(_transactions),
             Card(
               elevation: 5,
               child: Container(
