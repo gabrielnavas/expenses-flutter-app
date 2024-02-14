@@ -2,6 +2,7 @@ import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const Expenses());
 
@@ -91,7 +92,8 @@ class MyHomePage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  transaction.date.toIso8601String(),
+                                  DateFormat('d MMM y')
+                                      .format(transaction.date),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14,
