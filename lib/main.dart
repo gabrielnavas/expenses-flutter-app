@@ -72,7 +72,13 @@ class MyHomePage extends StatelessWidget {
                                   width: 2,
                                 ),
                               ),
-                              child: Text(transaction.value.toString()),
+                              child: Text(
+                                transaction.value.toString(),
+                                style: TextStyle(
+                                  color: Colors.purple,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,11 +87,17 @@ class MyHomePage extends StatelessWidget {
                                   transaction.title,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.purple,
+                                    fontSize: 16,
                                   ),
                                 ),
-                                Text(transaction.date.toIso8601String()),
+                                Text(
+                                  transaction.date.toIso8601String(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: Colors.black54,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
