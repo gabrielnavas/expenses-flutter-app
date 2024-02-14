@@ -50,7 +50,7 @@ class MyHomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              child: Card(
+              child: const Card(
                 child: Text('Gráfico'),
                 elevation: 5,
               ),
@@ -61,6 +61,17 @@ class MyHomePage extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 15,
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                              ),
                               child: Text(transaction.value.toString()),
                             ),
                             Column(
