@@ -73,7 +73,7 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                transaction.value.toString(),
+                                'R\$${transaction.value.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: Colors.purple,
                                   fontWeight: FontWeight.bold,
