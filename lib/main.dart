@@ -51,8 +51,8 @@ class MyHomePage extends StatelessWidget {
           children: [
             Container(
               child: const Card(
-                child: Text('Gráfico'),
                 elevation: 5,
+                child: Text('Gráfico'),
               ),
             ),
             Column(
@@ -68,7 +68,7 @@ class MyHomePage extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.black,
+                                  color: Colors.purple,
                                   width: 2,
                                 ),
                               ),
@@ -77,7 +77,14 @@ class MyHomePage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(transaction.title),
+                                Text(
+                                  transaction.title,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.purple,
+                                  ),
+                                ),
                                 Text(transaction.date.toIso8601String()),
                               ],
                             ),
