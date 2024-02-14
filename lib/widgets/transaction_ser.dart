@@ -1,23 +1,16 @@
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:expenses_flutter_app/widgets/transaction_form.dart';
 import 'package:expenses_flutter_app/widgets/transaction_list.dart';
-import 'package:expenses_flutter_app/widgets/transaction_ser.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-void main() => runApp(const Expenses());
-
-class Expenses extends StatelessWidget {
-  const Expenses({super.key});
+class TransactionUser extends StatefulWidget {
+  const TransactionUser({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-  }
+  State<TransactionUser> createState() => _TransactionUserState();
 }
 
-class MyHomePage extends StatelessWidget {
+class _TransactionUserState extends State<TransactionUser> {
   final List<Transaction> _transactions = [
     Transaction(
         id: '1', title: 'Tenis novo', value: 300.50, date: DateTime.now()),
@@ -38,23 +31,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Despesas pessoais'),
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.red,
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              child: const Card(
-                elevation: 5,
-                child: Text('Gráfico'),
-              ),
-            ),
-            TransactionUser(),
-          ],
-        ));
+    return Column(children: [
+      TransactionList(_transactions),
+      TransactionForm(),
+    ]);
   }
 }
