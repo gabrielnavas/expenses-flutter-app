@@ -3,13 +3,19 @@ import 'dart:math';
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionForm extends StatefulWidget {
   final void Function(Transaction transaction) getNewTransaction;
 
-  TransactionForm(this.getNewTransaction, {super.key});
+  const TransactionForm(this.getNewTransaction, {super.key});
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+
+  final valueController = TextEditingController();
 
   void _onPressedSubmitForm() {
     Transaction transaction = Transaction(
@@ -20,7 +26,7 @@ class TransactionForm extends StatelessWidget {
     if (!transaction.valid()) {
       return;
     }
-    getNewTransaction(transaction);
+    widget.getNewTransaction(transaction);
   }
 
   @override
