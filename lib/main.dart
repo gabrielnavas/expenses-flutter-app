@@ -1,4 +1,4 @@
-import 'package:expenses_flutter_app/widgets/transaction_ser.dart';
+import 'package:expenses_flutter_app/widgets/transaction_user.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const Expenses());
