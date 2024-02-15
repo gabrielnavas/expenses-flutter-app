@@ -20,6 +20,8 @@ class TransactionList extends StatelessWidget {
                         horizontal: 15,
                         vertical: 15,
                       ),
+                      width: 150,
+                      alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(
