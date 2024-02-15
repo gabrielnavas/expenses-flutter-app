@@ -10,4 +10,14 @@ class Transaction {
     required this.value,
     required this.date,
   });
+
+  bool valid() {
+    if (title.isEmpty) {
+      return false;
+    }
+    if (value <= 0) {
+      return false;
+    }
+    return true;
+  }
 }
