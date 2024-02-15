@@ -41,7 +41,7 @@ class TransactionForm extends StatelessWidget {
               controller: valueController,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (String a) => _onPressedSubmitForm(),
+              onSubmitted: (_) => _onPressedSubmitForm(),
               decoration: const InputDecoration(
                 labelText: 'Valor (R\$)',
               ),

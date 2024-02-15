@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:expenses_flutter_app/widgets/transaction_form.dart';
 import 'package:expenses_flutter_app/widgets/transaction_list.dart';
@@ -30,14 +28,10 @@ class _TransactionUserState extends State<TransactionUser> {
         id: '7', title: 'Camiseta nova', value: 70.50, date: DateTime.now()),
   ];
 
-  _addTransaction(String title, double value) {
+  _addTransaction(Transaction newTransaction) {
     setState(() {
-      var newTransaction = Transaction(
-          id: (Random().nextDouble() + _transactions.length + 1).toString(),
-          title: title,
-          value: value,
-          date: DateTime.now());
-      _transactions.add(newTransaction);
+      _transactions.insert(0, newTransaction);
+      FocusManager.instance.primaryFocus?.unfocus(); // close keyboard
     });
   }
 

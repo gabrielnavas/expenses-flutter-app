@@ -1,16 +1,15 @@
 import 'package:expenses_flutter_app/models/transaction.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
 
-  TransactionList(this.transactions, {super.key});
+  const TransactionList(this.transactions, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 500,
       child: ListView.builder(
         itemCount: transactions.length,
@@ -35,7 +34,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   child: Text(
                     'R\$${transaction.value.toStringAsFixed(2)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.purple,
                       fontWeight: FontWeight.bold,
                     ),
@@ -46,14 +45,14 @@ class TransactionList extends StatelessWidget {
                   children: [
                     Text(
                       transaction.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                     Text(
                       DateFormat('d MMM y').format(transaction.date),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
                         color: Colors.black54,
