@@ -35,11 +35,12 @@ class _TransactionUserState extends State<TransactionUser> {
     });
   }
 
+  final List<Widget> content = [];
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      TransactionForm(_addTransaction),
-      TransactionList(_transactions),
-    ]);
+    content.insert(0, TransactionForm(_addTransaction));
+    content.add(TransactionList(_transactions));
+    return Column(children: content);
   }
 }
