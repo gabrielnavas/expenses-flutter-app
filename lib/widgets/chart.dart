@@ -17,6 +17,7 @@ class Chart extends StatelessWidget {
       elevation: 6,
       margin: const EdgeInsets.all(20),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: childrenWeeks,
       ),
     );
