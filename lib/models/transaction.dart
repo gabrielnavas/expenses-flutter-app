@@ -18,6 +18,9 @@ class Transaction {
     if (value <= 0) {
       return false;
     }
+    if (date.isAfter(DateTime.now())) {
+      return false;
+    }
     return true;
   }
 

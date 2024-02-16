@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(Transaction transaction) getNewTransaction;
@@ -13,20 +14,58 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+  DateTime _dateSelected = DateTime.now();
 
   void _onPressedSubmitForm() {
     Transaction transaction = Transaction(
         id: Random().nextDouble().toString(),
-        title: titleController.text,
-        value: double.tryParse(valueController.text) ?? 0.00,
-        date: DateTime.now());
+        title: _titleController.text,
+        value: double.tryParse(_valueController.text) ?? 0.00,
+        date: _dateSelected);
     if (!transaction.valid()) {
+      _showMessage('Alguma informação está incorreta');
       return;
     }
     widget.getNewTransaction(transaction);
+  }
+
+  void _showMessage(String message) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Container(
+        height: 100,
+        width: double.infinity,
+        alignment: Alignment.center,
+        child: Text(
+          message,
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.red,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _selectedDate() async {
+    const int lessYears = 2;
+    final curretYearLess = DateTime.now().year - lessYears;
+    DateTime? date = await showDatePicker(
+      context: context,
+      currentDate: DateTime.now(),
+      firstDate: DateTime(curretYearLess),
+      lastDate: DateTime.now(),
+    );
+
+    if (date == null) {
+      return;
+    }
+
+    setState(() {
+      _dateSelected = date;
+    });
   }
 
   @override
@@ -38,13 +77,13 @@ class _TransactionFormState extends State<TransactionForm> {
         child: Column(
           children: [
             TextField(
-              controller: titleController,
+              controller: _titleController,
               decoration: const InputDecoration(
                 labelText: 'Título',
               ),
             ),
             TextField(
-              controller: valueController,
+              controller: _valueController,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) => _onPressedSubmitForm(),
@@ -52,12 +91,25 @@ class _TransactionFormState extends State<TransactionForm> {
                 labelText: 'Valor (R\$)',
               ),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(DateFormat('d MMM y').format(_dateSelected)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _selectedDate(),
+                    child: const Text('Alterar a data'),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(
-                    color: Colors.purple,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
