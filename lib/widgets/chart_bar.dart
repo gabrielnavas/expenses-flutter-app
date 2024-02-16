@@ -23,16 +23,15 @@ class ChartBar extends StatelessWidget {
   }
 
   Container _renderPercentage() {
-    Widget? chield = chartItem.percentage > 41.00
-        ? Text(
-            '${chartItem.percentage.toStringAsFixed(2)}%',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 11.5,
-            ),
-          )
-        : null;
+    Text text = Text(
+      '${chartItem.percentage.toStringAsFixed(2)}%',
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 11.5,
+      ),
+    );
+    Widget? chield = chartItem.percentage > 41.00 ? text : null;
     return Container(
       height: chartItem.percentage,
       width: 32,
