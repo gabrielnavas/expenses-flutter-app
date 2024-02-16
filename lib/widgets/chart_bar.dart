@@ -19,7 +19,13 @@ class ChartBar extends StatelessWidget {
   }
 
   Text _renderLabel() {
-    return Text(chartItem.label);
+    return Text(
+      chartItem.label,
+      style: const TextStyle(
+        color: Colors.purple,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 
   Container _renderPercentage() {
@@ -78,7 +84,7 @@ class ChartBar extends StatelessWidget {
       style: const TextStyle(
         color: Colors.purple,
         fontWeight: FontWeight.bold,
-        fontSize: 11.7,
+        fontSize: 10.7,
       ),
     );
   }
