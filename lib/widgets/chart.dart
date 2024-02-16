@@ -15,10 +15,12 @@ class Chart extends StatelessWidget {
 
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: childrenWeeks,
+      child: Flexible(
+        fit: FlexFit.tight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: childrenWeeks,
+        ),
       ),
     );
   }
