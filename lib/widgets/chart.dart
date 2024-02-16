@@ -17,9 +17,12 @@ class Chart extends StatelessWidget {
       elevation: 6,
       child: Flexible(
         fit: FlexFit.tight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: childrenWeeks,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: childrenWeeks,
+          ),
         ),
       ),
     );
