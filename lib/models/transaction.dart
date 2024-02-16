@@ -20,4 +20,19 @@ class Transaction {
     }
     return true;
   }
+
+  static List<Transaction> recentTransactions(
+      int howManyRecent, List<Transaction> transactions) {
+    DateTime weekDayInitial = _getWeekDayInitial(howManyRecent);
+    return transactions
+        .where((transaction) => transaction.date.isAfter(weekDayInitial))
+        .toList();
+  }
+
+  static DateTime _getWeekDayInitial(int manyLastRecentTransactions) {
+    final DateTime today = DateTime.now();
+    final DateTime weekDayInitial =
+        today.subtract(Duration(days: manyLastRecentTransactions));
+    return weekDayInitial;
+  }
 }
