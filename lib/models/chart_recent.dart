@@ -13,24 +13,13 @@ class ChartRecent {
   }
 
   List<ChartRecentItem> _generateChartItems(List<Transaction> transactions) {
-    // generate a list with the last week days
     List<ChartRecentItem> chartItems =
         List.generate(lastRecentTransactions, (index) {
-      // get today date or before util
-      // $weekDays= today, today-1 days, today-2 days, today-3 days and etc
-      final DateTime today = DateTime.now();
-      final weekDaySubtracted = today.subtract(Duration(days: index));
+      DateTime weekDaySubtracted = _getDateUntilLimitIndex(index);
 
       // get total value of week day ndex
-      double totalValueToday = 0.00;
-      for (int i = 0; i < transactions.length; i++) {
-        bool sameDay = transactions[i].date.day == weekDaySubtracted.day;
-        bool sameMonth = transactions[i].date.month == weekDaySubtracted.month;
-        bool sameYear = transactions[i].date.year == weekDaySubtracted.year;
-        if (sameDay && sameMonth && sameYear) {
-          totalValueToday += transactions[i].value;
-        }
-      }
+      double totalValueToday =
+          _getTotalValueOfWeekDay(transactions, weekDaySubtracted);
 
       return ChartRecentItem.withoutPercentage(
         value: totalValueToday,
@@ -40,25 +29,44 @@ class ChartRecent {
       );
     });
 
-    // get sum value transaction
-    for (int i = 0; i < transactions.length; i++) {
-      totalTransactions += transactions[i].value;
-    }
+    totalTransactions = transactions.fold(
+        0.00, (previousValue, element) => element.value + previousValue);
 
-    // set porcetagem and rest
-    if (totalTransactions <= 0.00) {
-      throw Exception('total transaction is zero');
-    }
-    for (int i = 0; i < chartItems.length; i++) {
-      chartItems[i].percentage =
-          (chartItems[i].value / totalTransactions) * 100;
-      chartItems[i].restPercentage = 100.00 - chartItems[i].percentage;
-    }
+    _setPorcentageAndRestEachItem(chartItems);
 
-    // S F T W T M S -> S M T W T F S
+    // reverse charItems S F T W T M S -> S M T W T F S
     chartItems = chartItems.reversed.toList();
 
     return chartItems;
+  }
+
+  DateTime _getDateUntilLimitIndex(int index) {
+    // get today date or before util
+    // $weekDays= today, today-1 days, today-2 days, today-3 days and etc
+    final DateTime today = DateTime.now();
+    final weekDaySubtracted = today.subtract(Duration(days: index));
+    return weekDaySubtracted;
+  }
+
+  void _setPorcentageAndRestEachItem(List<ChartRecentItem> chartItems) {
+    for (var chartItem in chartItems) {
+      chartItem.percentage = (chartItem.value / totalTransactions) * 100;
+      chartItem.restPercentage = 100.00 - chartItem.percentage;
+    }
+  }
+
+  double _getTotalValueOfWeekDay(
+      List<Transaction> transactions, DateTime weekDaySubtracted) {
+    double totalValueToday = 0.00;
+    for (int i = 0; i < transactions.length; i++) {
+      bool sameDay = transactions[i].date.day == weekDaySubtracted.day;
+      bool sameMonth = transactions[i].date.month == weekDaySubtracted.month;
+      bool sameYear = transactions[i].date.year == weekDaySubtracted.year;
+      if (sameDay && sameMonth && sameYear) {
+        totalValueToday += transactions[i].value;
+      }
+    }
+    return totalValueToday;
   }
 
   List<Transaction> _recentTransactions(List<Transaction> transactions) {
