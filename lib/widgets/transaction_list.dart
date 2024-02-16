@@ -4,8 +4,20 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(Transaction transaction) _onRemoveTransaction;
 
-  const TransactionList(this.transactions, {super.key});
+  const TransactionList(this.transactions, this._onRemoveTransaction,
+      {super.key});
+
+  void _confirmRemoveTransaction(
+      BuildContext context, Transaction transaction) {
+    _onRemoveTransaction(transaction);
+    _closedModal(context);
+  }
+
+  void _closedModal(BuildContext context) {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +48,7 @@ class TransactionList extends StatelessWidget {
             leading: _getLeading(transaction.value),
             title: _getTitle(transaction.title, context),
             subtitle: Text(DateFormat('d MMM y').format(transaction.date)),
-            trailing: _getTrailing(),
+            trailing: _getTrailing(context, transaction),
           ),
         );
       },
@@ -51,12 +63,12 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  Widget _getTrailing() {
-    return TextButton(
-      onPressed: () {},
-      child: const Icon(
+  Widget _getTrailing(BuildContext context, Transaction transaction) {
+    return IconButton(
+      onPressed: () => _showRemoveTransactionShield(context, transaction),
+      icon: const Icon(
         Icons.delete,
-        color: Colors.purple,
+        color: Colors.redAccent,
       ),
     );
   }
@@ -92,6 +104,56 @@ class TransactionList extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _showRemoveTransactionShield(
+      BuildContext context, Transaction transaction) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Column(
+        children: [
+          Container(
+            height: 67,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              'Tem certeza disso?',
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.red,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 20),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.redAccent)),
+                  onPressed: () =>
+                      _confirmRemoveTransaction(context, transaction),
+                  child: Text(
+                    'Sim, quero deletar!',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              OutlinedButton(
+                onPressed: () => _closedModal(context), // close modal,
+                child: Text('Não!',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black87)),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
