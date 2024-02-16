@@ -78,7 +78,7 @@ class ChartBar extends StatelessWidget {
       style: const TextStyle(
         color: Colors.purple,
         fontWeight: FontWeight.bold,
-        fontSize: 11.5,
+        fontSize: 11.7,
       ),
     );
   }
