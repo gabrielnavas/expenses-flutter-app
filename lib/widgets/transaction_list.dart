@@ -31,56 +31,68 @@ class TransactionList extends StatelessWidget {
       itemBuilder: (ctx, index) {
         final Transaction transaction = transactions[index];
         return Card(
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 15,
-                ),
-                width: 150,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
-                  ),
-                ),
-                child: Text(
-                  'R\$${transaction.value.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transaction.title,
-                      style: Theme.of(context).textTheme.titleSmall
-                      // style: const TextStyle(
-                      //   fontWeight: FontWeight.bold,
-                      //   fontSize: 16,
-                      // ),
-                      ),
-                  Text(
-                    DateFormat('d MMM y').format(transaction.date),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          elevation: 2,
+          child: ListTile(
+            leading: _getLeading(transaction.value),
+            title: _getTitle(transaction.title, context),
+            subtitle: Text(DateFormat('d MMM y').format(transaction.date)),
+            trailing: _getTrailing(),
           ),
         );
       },
     );
 
     Widget child = transactions.isEmpty ? image : list;
-    return SizedBox(height: 500, child: child);
+
+    return Container(
+      height: 500,
+      padding: const EdgeInsets.all(10),
+      child: child,
+    );
+  }
+
+  Widget _getTrailing() {
+    return TextButton(
+      onPressed: () {},
+      child: const Icon(
+        Icons.delete,
+        color: Colors.purple,
+      ),
+    );
+  }
+
+  Widget _getTitle(String title, BuildContext context) {
+    return Text(title, style: Theme.of(context).textTheme.titleSmall);
+  }
+
+  Widget _getLeading(double value) {
+    String valueFormated = 'R\$${value.toStringAsFixed(2).toString()}';
+    if (value >= 1000.00) {
+      valueFormated = 'R\$1k+';
+    } else if (value >= 10000.00) {
+      valueFormated = 'R\$10k+';
+    } else if (value >= 100000.00) {
+      valueFormated = 'R\$100k+';
+    } else if (value >= 1000000.00) {
+      valueFormated = 'R\$1kk+';
+    }
+    return CircleAvatar(
+      radius: 30,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: FittedBox(
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Text(
+              valueFormated,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.purple,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
