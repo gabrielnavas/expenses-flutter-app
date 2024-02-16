@@ -31,7 +31,16 @@ class ChartRecentItem {
       );
     });
 
-    _setPorcentageAndRestEachItem(chartItems);
+    // sum total transactions values
+    final double totalTransactions = chartItems.fold(
+        0.00, (previousValue, chartItem) => chartItem.value + previousValue);
+
+    bool isInititalTransaction = totalTransactions == 0.00;
+    if (isInititalTransaction) {
+      _setInititalPorcentageAndRest(totalTransactions, chartItems);
+    } else {
+      _setPorcentageAndRestEachItem(totalTransactions, chartItems);
+    }
 
     // reverse charItems S F T W T M S -> S M T W T F S
     chartItems = chartItems.reversed.toList();
@@ -47,12 +56,21 @@ class ChartRecentItem {
     return weekDaySubtracted;
   }
 
-  static void _setPorcentageAndRestEachItem(List<ChartRecentItem> chartItems) {
-    final double totalTransactions = chartItems.fold(
-        0.00, (previousValue, chartItem) => chartItem.value + previousValue);
+  static void _setPorcentageAndRestEachItem(
+      double totalTransactions, List<ChartRecentItem> chartItems) {
     for (var chartItem in chartItems) {
       chartItem.percentage = (chartItem.value / totalTransactions) * 100;
       chartItem.restPercentage = 100.00 - chartItem.percentage;
+    }
+  }
+
+  static void _setInititalPorcentageAndRest(
+    double totalTransactions,
+    List<ChartRecentItem> chartItems,
+  ) {
+    for (var chartItem in chartItems) {
+      chartItem.percentage = 0.00;
+      chartItem.restPercentage = 100.00;
     }
   }
 
