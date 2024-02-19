@@ -2,18 +2,22 @@ import 'dart:math';
 
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class TransactionForm extends StatefulWidget {
-  final void Function(Transaction transaction) getNewTransaction;
+class TransactionFormAdd extends StatefulWidget {
+  final void Function(Transaction transaction) onTransactionFinish;
 
-  const TransactionForm(this.getNewTransaction, {super.key});
+  const TransactionFormAdd(
+    this.onTransactionFinish, {
+    super.key,
+  });
 
   @override
-  State<TransactionForm> createState() => _TransactionFormState();
+  State<TransactionFormAdd> createState() => _TransactionFormAddState();
 }
 
-class _TransactionFormState extends State<TransactionForm> {
+class _TransactionFormAddState extends State<TransactionFormAdd> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
   DateTime _dateSelected = DateTime.now();
@@ -28,7 +32,7 @@ class _TransactionFormState extends State<TransactionForm> {
       _showMessage('Alguma informação está incorreta');
       return;
     }
-    widget.getNewTransaction(transaction);
+    widget.onTransactionFinish(transaction);
   }
 
   void _showMessage(String message) {
@@ -91,12 +95,13 @@ class _TransactionFormState extends State<TransactionForm> {
                 labelText: 'Valor (R\$)',
               ),
             ),
-            Container(
+            SizedBox(
               height: 70,
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(DateFormat('d MMM y').format(_dateSelected)),
+                    child: Text(
+                        'Data selecionada: ${DateFormat('d MMM y').format(_dateSelected)}'),
                   ),
                   ElevatedButton(
                     onPressed: () => _selectedDate(),
@@ -114,7 +119,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ),
                 ),
                 onPressed: _onPressedSubmitForm,
-                child: const Text('Nova transação'),
+                child: const Text('Nova Transação'),
               ),
             )
           ],

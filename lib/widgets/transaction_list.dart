@@ -21,7 +21,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Column image = Column(
+    Column imageListEmpty = Column(
       children: [
         Text(
           'Nenhuma transação cadastrada',
@@ -54,7 +54,7 @@ class TransactionList extends StatelessWidget {
       },
     );
 
-    Widget child = transactions.isEmpty ? image : list;
+    Widget child = transactions.isEmpty ? imageListEmpty : list;
 
     return Container(
       height: 500,
@@ -109,7 +109,9 @@ class TransactionList extends StatelessWidget {
   }
 
   void _showRemoveTransactionShield(
-      BuildContext context, Transaction transaction) {
+    BuildContext context,
+    Transaction transaction,
+  ) {
     showModalBottomSheet(
       context: context,
       builder: (_) => Column(

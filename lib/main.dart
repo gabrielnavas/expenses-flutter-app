@@ -1,7 +1,7 @@
 import 'package:expenses_flutter_app/models/chart_recent.dart';
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:expenses_flutter_app/widgets/chart.dart';
-import 'package:expenses_flutter_app/widgets/transaction_form.dart';
+import 'package:expenses_flutter_app/widgets/transaction_form_add.dart';
 import 'package:expenses_flutter_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _openTransactionForm(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => TransactionForm(_addTransaction),
+      builder: (_) => TransactionFormAdd(_addTransaction),
     );
   }
 
