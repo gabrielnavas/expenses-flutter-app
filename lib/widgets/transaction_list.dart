@@ -57,7 +57,6 @@ class TransactionList extends StatelessWidget {
     Widget child = transactions.isEmpty ? imageListEmpty : list;
 
     return Container(
-      height: 500,
       padding: const EdgeInsets.all(10),
       child: child,
     );

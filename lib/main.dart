@@ -59,7 +59,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(id: '1', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '2', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '3', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '4', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '5', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '6', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '7', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+    Transaction(id: '8', date: DateTime.now(), title: 'Almoço 1', value: 25.22),
+  ];
 
   _addTransaction(Transaction newTransaction) {
     setState(() {
@@ -85,23 +94,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final AppBar appBar = AppBar(
+      title: const Text('Despesas pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionForm(context),
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
+
+    final double paddingTop = MediaQuery.of(context).padding.top;
+    final double screenSize = MediaQuery.of(context).size.height;
+    final double availableHeight =
+        screenSize - paddingTop - appBar.preferredSize.height;
+
     ChartRecent chartRecent = ChartRecent(7, _transactions);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () => _openTransactionForm(context),
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(chartRecent),
-            TransactionList(_transactions, _removeTransaction),
+            Container(
+              height: availableHeight * 0.30,
+              child: Chart(chartRecent),
+            ),
+            Container(
+              height: availableHeight * 0.70,
+              child: TransactionList(_transactions, _removeTransaction),
+            )
           ],
         ),
       ),
