@@ -8,27 +8,34 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _renderValue(),
-        _renderRestPercentage(),
-        _renderPercentage(),
-        _renderLabel(),
-      ],
+    return LayoutBuilder(
+      builder: (ctx, constraint) {
+        return Column(
+          children: [
+            _renderValue(constraint.maxHeight * 0.15),
+            _renderRestPercentage(constraint.maxHeight * 0.70),
+            _renderPercentage(constraint.maxHeight * 0.70),
+            _renderLabel(constraint.maxHeight * 0.15),
+          ],
+        );
+      },
     );
   }
 
-  Text _renderLabel() {
-    return Text(
-      chartItem.label,
-      style: const TextStyle(
-        color: Colors.purple,
-        fontWeight: FontWeight.bold,
+  Container _renderLabel(double height) {
+    return Container(
+      height: height,
+      child: Text(
+        chartItem.label,
+        style: const TextStyle(
+          color: Colors.purple,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
-  Container _renderPercentage() {
+  Container _renderPercentage(double hight) {
     Text text = Text(
       '${chartItem.percentage.toStringAsFixed(2)}%',
       style: const TextStyle(
@@ -37,9 +44,9 @@ class ChartBar extends StatelessWidget {
         fontSize: 11.5,
       ),
     );
-    Widget? chield = chartItem.percentage > 41.00 ? text : null;
+    Widget? chield = chartItem.percentage > 45.00 ? text : null;
     return Container(
-      height: chartItem.percentage,
+      height: (chartItem.percentage / 100) * hight,
       width: 32,
       color: Colors.purple,
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -53,7 +60,7 @@ class ChartBar extends StatelessWidget {
     );
   }
 
-  Container _renderRestPercentage() {
+  Container _renderRestPercentage(double hight) {
     Text text = Text(
       '${chartItem.restPercentage.toStringAsFixed(2)}%',
       style: const TextStyle(
@@ -62,9 +69,9 @@ class ChartBar extends StatelessWidget {
         fontSize: 11.5,
       ),
     );
-    Widget? child = chartItem.restPercentage > 41.00 ? text : null;
+    Widget? child = chartItem.restPercentage > 45.00 ? text : null;
     return Container(
-      height: chartItem.restPercentage,
+      height: (chartItem.restPercentage / 100) * hight,
       width: 32,
       color: Colors.black12,
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -78,13 +85,16 @@ class ChartBar extends StatelessWidget {
     );
   }
 
-  Text _renderValue() {
-    return Text(
-      'R\$${chartItem.value.toStringAsFixed(2).toString()}',
-      style: const TextStyle(
-        color: Colors.purple,
-        fontWeight: FontWeight.bold,
-        fontSize: 10.7,
+  Container _renderValue(double height) {
+    return Container(
+      height: height,
+      child: Text(
+        'R\$${chartItem.value.toStringAsFixed(2).toString()}',
+        style: const TextStyle(
+          color: Colors.purple,
+          fontWeight: FontWeight.bold,
+          fontSize: 10.7,
+        ),
       ),
     );
   }
