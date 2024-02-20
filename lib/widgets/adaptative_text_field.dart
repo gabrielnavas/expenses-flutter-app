@@ -18,18 +18,24 @@ class AdaptativeTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS
-        ? CupertinoTextField(
-            controller: textEditingController,
-            onSubmitted: onSubmitted,
-            placeholder: placeholder,
-            keyboardType: keyboardType,
-          )
-        : TextField(
-            controller: textEditingController,
-            onSubmitted: onSubmitted,
-            decoration: InputDecoration(labelText: placeholder),
-            keyboardType: keyboardType,
-          );
+    return Platform.isIOS ? _renderIos() : _renderAndroid();
+  }
+
+  TextField _renderAndroid() {
+    return TextField(
+      controller: textEditingController,
+      onSubmitted: onSubmitted,
+      decoration: InputDecoration(labelText: placeholder),
+      keyboardType: keyboardType,
+    );
+  }
+
+  CupertinoTextField _renderIos() {
+    return CupertinoTextField(
+      controller: textEditingController,
+      onSubmitted: onSubmitted,
+      placeholder: placeholder,
+      keyboardType: keyboardType,
+    );
   }
 }
