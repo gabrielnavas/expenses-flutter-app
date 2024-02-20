@@ -32,16 +32,23 @@ class _PrincipalHomeState extends State<PrincipalHome> {
   }
 
   void _openTransactionForm(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (_) => TransactionFormAdd(_addTransaction),
-    );
+    bool isPortrait = _isPortrait(context);
+
+    if (isPortrait) {
+      showModalBottomSheet(
+        context: context,
+        builder: (_) => TransactionFormAdd(_addTransaction),
+      );
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => TransactionFormAdd(_addTransaction));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    bool isPortrait = _isPortrait(context);
 
     AppBar appBar = _renderAppBar(context);
 
@@ -67,6 +74,12 @@ class _PrincipalHomeState extends State<PrincipalHome> {
         onPressed: () => _openTransactionForm(context),
       ),
     );
+  }
+
+  bool _isPortrait(BuildContext context) {
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+    return isPortrait;
   }
 
   AppBar _renderAppBar(BuildContext context) {
