@@ -15,8 +15,8 @@ class AdaptativeButton extends StatelessWidget {
     return Platform.isIOS
         ? CupertinoButton(
             onPressed: onPressed,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: child,
-            padding: EdgeInsets.symmetric(horizontal: 20),
           )
         : ElevatedButton(
             style: ElevatedButton.styleFrom(
