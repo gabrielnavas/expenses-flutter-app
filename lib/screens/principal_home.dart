@@ -43,10 +43,7 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
-    final AppBar appBar = AppBar(
-      title: const Text('Despesas pessoais'),
-      actions: _renderActionsAppBar(context),
-    );
+    AppBar appBar = _renderAppBar(context);
 
     double availableHeight = _calculateAvailableHeight(context, appBar);
 
@@ -72,6 +69,14 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     );
   }
 
+  AppBar _renderAppBar(BuildContext context) {
+    final AppBar appBar = AppBar(
+      title: const Text('Despesas pessoais'),
+      actions: _renderActionsAppBar(context),
+    );
+    return appBar;
+  }
+
   List<Widget> _renderActionsAppBar(BuildContext context) {
     final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
@@ -84,20 +89,21 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     ];
 
     if (!isPortrait) {
+      IconData icon = _showChart ? Icons.list : Icons.bar_chart_outlined;
       Widget toggleChartOrTransactionList = Row(
         children: [
           IconButton(
-            icon: Icon(Icons.auto_graph),
+            icon: Icon(icon),
             onPressed: () {
               setState(() {
                 _showChart = !_showChart;
               });
             },
-            color: _showChart ? Colors.blueAccent : Colors.white,
+            color: Colors.blueAccent,
           ),
         ],
       );
-      widgets.add(toggleChartOrTransactionList);
+      widgets.insert(0, toggleChartOrTransactionList);
     }
 
     return widgets;
