@@ -30,6 +30,7 @@ class ChartBar extends StatelessWidget {
         style: const TextStyle(
           color: Colors.purple,
           fontWeight: FontWeight.bold,
+          fontSize: 16,
         ),
       ),
     );
@@ -41,10 +42,10 @@ class ChartBar extends StatelessWidget {
       style: const TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: 11.5,
+        fontSize: 14.5,
       ),
     );
-    Widget? chield = chartItem.percentage > 45.00 ? text : null;
+    Widget? chield = chartItem.percentage > 40.00 ? text : null;
     return Container(
       height: (chartItem.percentage / 100) * hight,
       width: 32,
@@ -66,10 +67,10 @@ class ChartBar extends StatelessWidget {
       style: const TextStyle(
         color: Colors.black45,
         fontWeight: FontWeight.bold,
-        fontSize: 11.5,
+        fontSize: 14.5,
       ),
     );
-    Widget? child = chartItem.restPercentage > 45.00 ? text : null;
+    Widget? child = chartItem.restPercentage > 40.00 ? text : null;
     return Container(
       height: (chartItem.restPercentage / 100) * hight,
       width: 32,
@@ -94,7 +95,7 @@ class ChartBar extends StatelessWidget {
         style: const TextStyle(
           color: Colors.purple,
           fontWeight: FontWeight.bold,
-          fontSize: 10.7,
+          fontSize: 16.7,
         ),
       ),
     );
