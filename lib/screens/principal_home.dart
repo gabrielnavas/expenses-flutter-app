@@ -117,15 +117,19 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
+    IconData iconAdd = Platform.isIOS ? CupertinoIcons.add : Icons.add;
     List<Widget> widgets = [
       IconButton(
         onPressed: () => _openTransactionForm(context),
-        icon: const Icon(Icons.add),
+        icon: Icon(iconAdd),
       ),
     ];
 
     if (!isPortrait) {
-      IconData icon = _showChart ? Icons.list : Icons.bar_chart_outlined;
+      IconData iconAndroid = _showChart ? Icons.list : Icons.bar_chart_outlined;
+      IconData iconIos =
+          _showChart ? CupertinoIcons.list_bullet : Icons.bar_chart_outlined;
+      IconData icon = Platform.isIOS ? iconIos : iconAndroid;
       Widget toggleChartOrTransactionList = Row(
         children: [
           IconButton(
