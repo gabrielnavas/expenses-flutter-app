@@ -13,10 +13,6 @@ class Expenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-
     final ThemeData theme = ThemeData(fontFamily: 'Quicksand');
     return MaterialApp(
       home: const MyHomePage(),
