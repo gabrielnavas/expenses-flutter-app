@@ -14,9 +14,9 @@ class Expenses extends StatelessWidget {
       home: const PrincipalHome(),
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary: Colors.amber,
-        ),
+            primary: Colors.purple,
+            secondary: Colors.amber,
+            background: Colors.white),
         textTheme: theme.textTheme.copyWith(
           titleLarge: const TextStyle(
             fontSize: 18,

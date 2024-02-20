@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:expenses_flutter_app/models/transaction.dart';
+import 'package:expenses_flutter_app/widgets/adaptative_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -109,23 +110,28 @@ class _TransactionFormAddState extends State<TransactionFormAdd> {
                       child: Text(
                           'Data selecionada: ${DateFormat('d MMM y').format(_dateSelected)}'),
                     ),
-                    ElevatedButton(
-                      onPressed: () => _selectedDate(),
-                      child: const Text('Alterar a data'),
-                    ),
+                    AdaptativeButton(
+                      onPressed: _selectedDate,
+                      child: const Text(
+                        'Alterar a data',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(
+                child: AdaptativeButton(
+                  onPressed: _onPressedSubmitForm,
+                  child: const Text(
+                    'Nova Transação',
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: _onPressedSubmitForm,
-                  child: const Text('Nova Transação'),
                 ),
               )
             ],
