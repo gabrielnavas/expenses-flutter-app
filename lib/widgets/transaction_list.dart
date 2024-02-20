@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:expenses_flutter_app/models/transaction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -72,11 +75,13 @@ class TransactionList extends StatelessWidget {
   Widget _getTrailing(BuildContext context, Transaction transaction) {
     final double width = MediaQuery.of(context).size.width;
     int portraitPhoneWidth = 480;
+    IconData icon = Platform.isIOS ? CupertinoIcons.delete : Icons.delete;
+
     if (width <= portraitPhoneWidth) {
       return IconButton(
         onPressed: () => _showRemoveTransactionShield(context, transaction),
-        icon: const Icon(
-          Icons.delete,
+        icon: Icon(
+          icon,
           color: Colors.redAccent,
         ),
       );
@@ -84,8 +89,8 @@ class TransactionList extends StatelessWidget {
 
     return TextButton.icon(
       onPressed: () => _showRemoveTransactionShield(context, transaction),
-      icon: const Icon(
-        Icons.delete,
+      icon: Icon(
+        icon,
         color: Colors.redAccent,
       ),
       label: const Text('Excluir',
