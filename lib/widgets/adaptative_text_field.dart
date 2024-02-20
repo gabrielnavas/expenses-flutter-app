@@ -30,12 +30,18 @@ class AdaptativeTextField extends StatelessWidget {
     );
   }
 
-  CupertinoTextField _renderIos() {
-    return CupertinoTextField(
-      controller: textEditingController,
-      onSubmitted: onSubmitted,
-      placeholder: placeholder,
-      keyboardType: keyboardType,
+  Padding _renderIos() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 10,
+      ),
+      child: CupertinoTextField(
+        controller: textEditingController,
+        onSubmitted: onSubmitted,
+        placeholder: placeholder,
+        keyboardType: keyboardType,
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+      ),
     );
   }
 }
