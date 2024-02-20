@@ -62,22 +62,24 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     Widget renderWidgetChild =
         _renderWidgetChild(isPortrait, availableHeight, chartRecent);
 
-    Widget child = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [renderWidgetChild],
+    Widget bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [renderWidgetChild],
+        ),
       ),
     );
 
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
         navigationBar: appBar as ObstructingPreferredSizeWidget,
-        child: child,
+        child: bodyPage,
       );
     }
     return Scaffold(
       appBar: appBar,
-      body: child,
+      body: bodyPage,
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.secondary,
