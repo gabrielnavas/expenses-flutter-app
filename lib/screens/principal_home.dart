@@ -125,7 +125,7 @@ class _PrincipalHomeState extends State<PrincipalHome> {
   Widget _renderWidgetChild(
       bool isPortrait, double availableHeight, ChartRecent chartRecent) {
     Widget chart = Container(
-      height: isPortrait ? availableHeight * 0.30 : availableHeight,
+      height: isPortrait ? availableHeight * 0.30 : availableHeight * 0.86,
       child: Chart(chartRecent),
     );
 
