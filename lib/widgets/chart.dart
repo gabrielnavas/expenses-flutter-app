@@ -13,17 +13,15 @@ class Chart extends StatelessWidget {
         .map((chartRecentItem) => ChartBar(chartRecentItem))
         .toList();
 
-    return Container(
-      child: Card(
-        elevation: 6,
-        child: Flexible(
-          fit: FlexFit.tight,
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: childrenWeeks,
-            ),
+    return Card(
+      elevation: 6,
+      child: Flexible(
+        fit: FlexFit.tight,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: childrenWeeks,
           ),
         ),
       ),

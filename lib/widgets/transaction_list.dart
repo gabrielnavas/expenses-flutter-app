@@ -143,9 +143,9 @@ class TransactionList extends StatelessWidget {
             height: 67,
             width: double.infinity,
             alignment: Alignment.center,
-            child: Text(
+            child: const Text(
               'Tem certeza disso?',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 color: Colors.red,
                 fontWeight: FontWeight.w500,
@@ -156,14 +156,14 @@ class TransactionList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(right: 20),
+                margin: const EdgeInsets.only(right: 20),
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.redAccent)),
                   onPressed: () =>
                       _confirmRemoveTransaction(context, transaction),
-                  child: Text(
+                  child: const Text(
                     'Sim, quero deletar!',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.white),
@@ -172,7 +172,7 @@ class TransactionList extends StatelessWidget {
               ),
               OutlinedButton(
                 onPressed: () => _closedModal(context), // close modal,
-                child: Text('Não!',
+                child: const Text('Não!',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
               )

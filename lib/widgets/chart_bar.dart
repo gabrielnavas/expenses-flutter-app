@@ -22,8 +22,8 @@ class ChartBar extends StatelessWidget {
     );
   }
 
-  Container _renderLabel(double height) {
-    return Container(
+  SizedBox _renderLabel(double height) {
+    return SizedBox(
       height: height,
       child: Text(
         chartItem.label,

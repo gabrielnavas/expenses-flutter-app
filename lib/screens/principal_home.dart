@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:expenses_flutter_app/models/chart_recent.dart';
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:expenses_flutter_app/widgets/chart.dart';
 import 'package:expenses_flutter_app/widgets/transaction_form_add.dart';
 import 'package:expenses_flutter_app/widgets/transaction_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PrincipalHome extends StatefulWidget {
@@ -50,7 +53,7 @@ class _PrincipalHomeState extends State<PrincipalHome> {
   Widget build(BuildContext context) {
     bool isPortrait = _isPortrait(context);
 
-    AppBar appBar = _renderAppBar(context);
+    PreferredSizeWidget appBar = _renderAppBar(context);
 
     double availableHeight = _calculateAvailableHeight(context, appBar);
 
@@ -59,14 +62,22 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     Widget renderWidgetChild =
         _renderWidgetChild(isPortrait, availableHeight, chartRecent);
 
+    Widget child = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [renderWidgetChild],
+      ),
+    );
+
+    if (Platform.isIOS) {
+      return CupertinoPageScaffold(
+        navigationBar: appBar as ObstructingPreferredSizeWidget,
+        child: child,
+      );
+    }
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [renderWidgetChild],
-        ),
-      ),
+      body: child,
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -82,12 +93,22 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     return isPortrait;
   }
 
-  AppBar _renderAppBar(BuildContext context) {
-    final AppBar appBar = AppBar(
-      title: const Text('Despesas pessoais'),
-      actions: _renderActionsAppBar(context),
+  PreferredSizeWidget _renderAppBar(BuildContext context) {
+    Text text = const Text('Despesas pessoais');
+    var actions = _renderActionsAppBar(context);
+
+    if (Platform.isIOS) {
+      return CupertinoNavigationBar(
+        middle: text,
+        trailing: Row(
+          children: actions,
+        ),
+      );
+    }
+    return AppBar(
+      title: text,
+      actions: actions,
     );
-    return appBar;
   }
 
   List<Widget> _renderActionsAppBar(BuildContext context) {
@@ -124,12 +145,12 @@ class _PrincipalHomeState extends State<PrincipalHome> {
 
   Widget _renderWidgetChild(
       bool isPortrait, double availableHeight, ChartRecent chartRecent) {
-    Widget chart = Container(
+    Widget chart = SizedBox(
       height: isPortrait ? availableHeight * 0.30 : availableHeight * 0.86,
       child: Chart(chartRecent),
     );
 
-    Widget transactionList = Container(
+    Widget transactionList = SizedBox(
       height: isPortrait ? availableHeight * 0.70 : availableHeight,
       child: TransactionList(_transactions, _removeTransaction),
     );
@@ -150,7 +171,8 @@ class _PrincipalHomeState extends State<PrincipalHome> {
     return transactionList;
   }
 
-  double _calculateAvailableHeight(BuildContext context, AppBar appBar) {
+  double _calculateAvailableHeight(
+      BuildContext context, PreferredSizeWidget appBar) {
     final double paddingTop = MediaQuery.of(context).padding.top;
     final double screenSize = MediaQuery.of(context).size.height;
     final double availableHeight =
