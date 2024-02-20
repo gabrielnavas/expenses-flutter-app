@@ -88,6 +88,7 @@ class ChartBar extends StatelessWidget {
   Container _renderValue(double height) {
     return Container(
       height: height,
+      alignment: Alignment.center,
       child: Text(
         'R\$${chartItem.value.toStringAsFixed(2).toString()}',
         style: const TextStyle(
