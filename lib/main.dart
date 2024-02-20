@@ -4,6 +4,7 @@ import 'package:expenses_flutter_app/widgets/chart.dart';
 import 'package:expenses_flutter_app/widgets/transaction_form_add.dart';
 import 'package:expenses_flutter_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const Expenses());
 
@@ -12,6 +13,10 @@ class Expenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     final ThemeData theme = ThemeData(fontFamily: 'Quicksand');
     return MaterialApp(
       home: const MyHomePage(),
