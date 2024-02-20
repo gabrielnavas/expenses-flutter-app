@@ -70,12 +70,29 @@ class TransactionList extends StatelessWidget {
   }
 
   Widget _getTrailing(BuildContext context, Transaction transaction) {
-    return IconButton(
+    final double width = MediaQuery.of(context).size.width;
+    int portraitPhoneWidth = 480;
+    if (width <= portraitPhoneWidth) {
+      return IconButton(
+        onPressed: () => _showRemoveTransactionShield(context, transaction),
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.redAccent,
+        ),
+      );
+    }
+
+    return TextButton.icon(
       onPressed: () => _showRemoveTransactionShield(context, transaction),
       icon: const Icon(
         Icons.delete,
         color: Colors.redAccent,
       ),
+      label: const Text('Excluir',
+          style: TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.bold,
+          )),
     );
   }
 
