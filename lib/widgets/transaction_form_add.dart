@@ -1,11 +1,10 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:expenses_flutter_app/models/transaction.dart';
 import 'package:expenses_flutter_app/widgets/adaptative_button.dart';
+import 'package:expenses_flutter_app/widgets/adaptative_date_picker.dart';
 import 'package:expenses_flutter_app/widgets/adaptative_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionFormAdd extends StatefulWidget {
   final void Function(Transaction transaction) onTransactionFinish;
@@ -23,6 +22,12 @@ class _TransactionFormAddState extends State<TransactionFormAdd> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
   DateTime _dateSelected = DateTime.now();
+  int curretYearLess = 0;
+
+  _TransactionFormAddState() {
+    const int lessYears = 2;
+    curretYearLess = DateTime.now().year - lessYears;
+  }
 
   void _onPressedSubmitForm() {
     Transaction transaction = Transaction(
@@ -55,9 +60,7 @@ class _TransactionFormAddState extends State<TransactionFormAdd> {
     );
   }
 
-  void _selectedDate() async {
-    const int lessYears = 2;
-    final curretYearLess = DateTime.now().year - lessYears;
+  void _selectedDate(DateTime? datetimeSelected) async {
     DateTime? date = await showDatePicker(
       context: context,
       currentDate: DateTime.now(),
@@ -65,13 +68,18 @@ class _TransactionFormAddState extends State<TransactionFormAdd> {
       lastDate: DateTime.now(),
     );
 
-    if (date == null) {
+    if (date != null) {
+      setState(() {
+        _dateSelected = date;
+      });
       return;
     }
 
-    setState(() {
-      _dateSelected = date;
-    });
+    if (datetimeSelected != null) {
+      setState(() {
+        _dateSelected = datetimeSelected;
+      });
+    }
   }
 
   @override
@@ -100,25 +108,10 @@ class _TransactionFormAddState extends State<TransactionFormAdd> {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
               ),
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                          'Data selecionada: ${DateFormat('d MMM y').format(_dateSelected)}'),
-                    ),
-                    AdaptativeButton(
-                      onPressed: _selectedDate,
-                      child: const Text(
-                        'Alterar a data',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+              AdaptativeDatePicker(
+                onSelectedDate: _selectedDate,
+                dateSelected: _dateSelected,
+                curretYearLess: curretYearLess,
               ),
               SizedBox(
                 width: double.infinity,
